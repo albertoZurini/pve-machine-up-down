@@ -12,7 +12,8 @@ class MachineHandler:
             return
 
         for vmid in self.ids:
-            os.system("qm start {}".format(vmid))
+            if os.system("qm start {}".format(vmid)) != 0:
+                os.system("pct start {}".format(vmid))
 
         logger.debug("machines started")
         self.started = True
@@ -22,7 +23,8 @@ class MachineHandler:
             return
 
         for vmid in self.ids:
-            os.system("qm stop {}".format(vmid))
+            if os.system("qm stop {}".format(vmid)) != 0:
+                os.system("pct start {}".format(vmid))
 
         logger.debug("machines stopped")
         self.started = False
